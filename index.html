@@ -220,7 +220,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -247,21 +247,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2020/04/17/hello-world/" class="title">Hello World</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2020-04-17T12:11:51.052Z" itemprop="datePublished">2020-04-17</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -274,63 +259,111 @@
   
   <main class="main" role="main">
   
-  <div class="content article-list">
+  
+    <div class="content">
+  <article id="post-操作系统——中断异常、系统调用、运行机制" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
+    <div class="article-header">
+      
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%AD%E6%96%AD%E5%BC%82%E5%B8%B8%E3%80%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E3%80%81%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">操作系统——中断异常、系统调用</a>
     </h1>
   
 
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
+      
+      <div class="article-meta">
+        <span class="article-date">
     <i class="icon icon-calendar-check"></i>
 	<a href="/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%AD%E6%96%AD%E5%BC%82%E5%B8%B8%E3%80%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E3%80%81%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="article-date">
-	  <time datetime="2020-04-21T02:20:02.718Z" itemprop="datePublished">4月 21</time>
+	  <time datetime="2020-04-21T02:20:02.718Z" itemprop="datePublished">2020-04-21</time>
 	</a>
 </span>
-    
-    
+        
+        
 
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%AD%E6%96%AD%E5%BC%82%E5%B8%B8%E3%80%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E3%80%81%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
+        
 
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/17/hello-world/">Hello World</a>
-    </h1>
-  
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%AD%E6%96%AD%E5%BC%82%E5%B8%B8%E3%80%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E3%80%81%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>操作系统<strong>概念</strong>：负责管理协调硬件、软件等计算机资源的工作，为上层用户、应用程序提供简单易用的服务的系统软件</p>
+<p>给普通用户服务：GUI图形界面、命令接口（联机命令、脱机命令）<br>给程序员/软件：程序接口（系统调用）</p>
+<p>操作系统的<strong>特征</strong>：</p>
+<ol>
+<li><p><strong>并发</strong>：两个或多个事件<strong>在同一时间间隔内发生</strong>。这些事件宏观上是同时            发生的，但微观上是交替发生的。（区分与并行）</p>
+</li>
+<li><p><strong>共享</strong>：即资源共享，是指系统中的资源可供内存中多个并发执行的进程共同使用。分为==互斥共享方式==与==同时共享方式==</p>
+<p>   互斥共享方式好比在一台电脑上同一时间使用QQ和微信进行视频，但是摄像头只能分给一个程序。同时共享方式好比用QQ和微信同时发送一份文件。</p>
+</li>
+</ol>
+<ol start="3">
+<li><p><strong>虚拟</strong>：在用户看来，每个程序独享主机资源。</p>
+<p> 虚拟技术：空分复用技术（虚拟存储器技术）、时分复用技术（虚拟处理器）</p>
+</li>
+<li><p><strong>异步</strong>：在多道程序环境中允许多个程序并发执行，但由于资源有限，进程的执行不是一贯到底，而是走走停停，以不可预知的速度向前推进。</p>
+</li>
+</ol>
+<h2 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h2><h3 id="中断和异常的作用"><a href="#中断和异常的作用" class="headerlink" title="中断和异常的作用"></a>中断和异常的作用</h3><ol>
+<li>中断会使CPU由用户态变为内核态</li>
+<li>操作系统重新夺回对CPU的控制权</li>
+</ol>
+<h3 id="中断和异常的区别"><a href="#中断和异常的区别" class="headerlink" title="中断和异常的区别"></a>中断和异常的区别</h3><ul>
+<li>异常是由于执行了现行指令所引起的。由于系统调用引起的中断属于异常。</li>
+<li>中断则是由于系统中某事件引起的，该事件与现行指令无关。</li>
+</ul>
+<p>相同点：都是CPU对系统发生的某个事情做出的一种反应。</p>
+<p> 区别：中断由外因引起，异常由CPU本身原因引起。</p>
+<h3 id="中断和异常的处理"><a href="#中断和异常的处理" class="headerlink" title="中断和异常的处理"></a>中断和异常的处理</h3><p><img src="https://img-blog.csdnimg.cn/20200421094605265.bmp?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>不同的中断信号，需要用不同的中断处理程序来处理。当CPU检测到中断信号后，会根据中断信号的类型去查询“中断向量表”，以此来找到相应的中断处理程序在内存中的存放位置。</p>
+<h2 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h2><h3 id="系统调用的作用"><a href="#系统调用的作用" class="headerlink" title="系统调用的作用"></a>系统调用的作用</h3><p>（好比向图书馆借书，每个人都有顺序，图书馆管理员充当操作系统的角色，合理顺序的分配给每个人书籍）</p>
+<p>应用程序通过系统调用请求操作系统的服务。而系统中的共享资源都由操作系统内核统一掌管，因此凡是与共享资源有关的操作，都必须通过系统调用的方式向操作系统内核提出服务请求，由操作系统内核代为完成。这样==可以保证系统的稳定性和安全性==。</p>
+<h3 id="系统调用的过程"><a href="#系统调用的过程" class="headerlink" title="系统调用的过程"></a>系统调用的过程</h3><p><img src="https://img-blog.csdnimg.cn/20200421100337784.bmp?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>传递系统调用参数-&gt;执行陷入指令（<strong>用户态</strong>）-&gt;执行相应的内请求核程序处理系统调用（<strong>内核态</strong>）-&gt;返回</p>
 
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://josiasanas.github.io/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%AD%E6%96%AD%E5%BC%82%E5%B8%B8%E3%80%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E3%80%81%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" title="操作系统——中断异常、系统调用" target="_blank" rel="external">https://josiasanas.github.io/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%AD%E6%96%AD%E5%BC%82%E5%B8%B8%E3%80%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E3%80%81%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/as.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">JosiasAnas</span><small class="ml-1x">改变一点，幸运一点</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
   </div>
+</div>
+
+
+    </div>
+  </article>
   
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2020/04/17/hello-world/" class="article-date">
-	  <time datetime="2020-04-17T12:11:51.052Z" itemprop="datePublished">4月 17</time>
-	</a>
-</span>
-    
-    
+</div>
 
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/17/hello-world/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-  </div>
+  
 
    
 </main>
