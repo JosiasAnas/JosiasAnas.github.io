@@ -17,26 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>操作系统——三级调度（作业、内存、进程) | Hexo</title>
-  <meta name="description" content="@TOC 调度调度的基本概念调度研究的问题：当有一堆任务要处理，但由于资源有限，这些事情没法同时处理。这就需要确定某种规则来决定处理这些任务的顺序，这就是调度研究的问题。 举个有味道的例子：现在有4个人要上厕所(他们几乎同时到达)，他们分别需要使用厕所3分钟、10分钟、1分钟、4分钟。但是他们面前只有一个厕所，而且厕所里面只有一个马桶，那我们应该怎么确定他们上厕所的顺序呢？ 我们有以下的方案：">
+  <title>json概述(序列化与反序列化) | Hexo</title>
+  <meta name="description" content="什么是jsonJSON (JavaScript Object Notation, JS 对象标记) 是一种轻量级的数据交换格式。它基于 ECMAScript (w3c制定的js规范)的一个子集，采用完全独立于编程语言的文本格式来存储和表示数据。简洁和清晰的层次结构使得 JSON 成为理想的数据交换语言。 易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。——百度百科 数据传输是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="操作系统——三级调度（作业、内存、进程)">
-<meta property="og:url" content="https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/index.html">
+<meta property="og:title" content="json概述(序列化与反序列化)">
+<meta property="og:url" content="https://josiasanas.github.io/2020/05/04/json%E6%A6%82%E8%BF%B0%EF%BC%88%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="@TOC 调度调度的基本概念调度研究的问题：当有一堆任务要处理，但由于资源有限，这些事情没法同时处理。这就需要确定某种规则来决定处理这些任务的顺序，这就是调度研究的问题。 举个有味道的例子：现在有4个人要上厕所(他们几乎同时到达)，他们分别需要使用厕所3分钟、10分钟、1分钟、4分钟。但是他们面前只有一个厕所，而且厕所里面只有一个马桶，那我们应该怎么确定他们上厕所的顺序呢？ 我们有以下的方案：">
+<meta property="og:description" content="什么是jsonJSON (JavaScript Object Notation, JS 对象标记) 是一种轻量级的数据交换格式。它基于 ECMAScript (w3c制定的js规范)的一个子集，采用完全独立于编程语言的文本格式来存储和表示数据。简洁和清晰的层次结构使得 JSON 成为理想的数据交换语言。 易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。——百度百科 数据传输是">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145600682.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145731829.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145817338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145934323.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425150048940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2020-04-25T12:39:21.706Z">
-<meta property="article:modified_time" content="2020-04-30T06:07:40.688Z">
+<meta property="article:published_time" content="2020-05-04T12:31:53.987Z">
+<meta property="article:modified_time" content="2020-05-04T12:33:32.096Z">
 <meta property="article:author" content="JosiasAnas">
+<meta property="article:tag" content="json">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200425145600682.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/index.html">
+  <link rel="canonical" href="https://josiasanas.github.io/2020/05/04/json%E6%A6%82%E8%BF%B0%EF%BC%88%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -351,14 +346,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-操作系统——三级调度（作业、内存、进程)" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-json概述（序列化与反序列化）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      操作系统——三级调度（作业、内存、进程)
+      json概述(序列化与反序列化)
     </h1>
   
 
@@ -366,68 +361,46 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/" class="article-date">
-	  <time datetime="2020-04-25T12:39:21.706Z" itemprop="datePublished">2020-04-25</time>
+	<a href="/2020/05/04/json%E6%A6%82%E8%BF%B0%EF%BC%88%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89/" class="article-date">
+	  <time datetime="2020-05-04T12:31:53.987Z" itemprop="datePublished">2020-05-04</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/">技术栈</a>
   </span>
 
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/json/" rel="tag">json</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/04/json%E6%A6%82%E8%BF%B0%EF%BC%88%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>@<a href="文章目录">TOC</a></p>
-<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><h2 id="调度的基本概念"><a href="#调度的基本概念" class="headerlink" title="调度的基本概念"></a>调度的基本概念</h2><p>调度研究的问题：当有一堆任务要处理，但由于资源有限，这些事情没法同时处理。这就需要确定某种规则来决定处理这些任务的顺序，这就是调度研究的问题。</p>
-<p>举个有味道的例子：<br>现在有4个人要上厕所(他们几乎同时到达)，他们分别需要使用厕所3分钟、10分钟、1分钟、4分钟。但是他们面前只有一个厕所，而且厕所里面只有一个马桶，那我们应该怎么确定他们上厕所的顺序呢？</p>
-<p>我们有以下的方案：</p>
-<ol>
-<li>谁先来，谁就先用厕所。</li>
-<li>谁需要使用的时间少，谁先用厕所。</li>
-</ol>
-<p>我们先说说第一种方案，这种方案很公平，谁先来谁先用，但是这样会产生一个问题。假如他们来的顺序是10分钟、4分钟、3分钟、1分钟，显然，采用这种方案的话，对于最后一个人，他上厕所1分钟要等17分钟，估计翔都憋不住了吧…<br>我们再说下第二种方案，采用这种方案的话，虽然没有第一种方案公平，但是这4个人的整体平均等待时间是最少的。(平均等待时间 = 每个人等待的时间的和 / 人数)</p>
-<p>在上面的例子中，厕所就是资源，方案就是调度的规则，而调度就是安排他们上厕所。</p>
-<p><strong>我们回到操作系统，在多道程序系统中，进程的数量往往是多于处理机个数的，这样就导致处理机不能并行的处理所有进程。处理机调度，就是从就绪队列中按照某种的算法选择一个进程并将处理机分配给它，以实现进程的并发运行。<br>操作系统的调度有三个层次，分别是高级调度、中级调度和低级调度。下面分别介绍它们。</strong></p>
-<h3 id="高级调度-外存-–-gt-内存"><a href="#高级调度-外存-–-gt-内存" class="headerlink" title="高级调度 (外存 –&gt; 内存)"></a>高级调度 (外存 –&gt; 内存)</h3><p>我们知道是计算机的内存空间是有限，所以有时操作系统无法将用户提交的作业全部放入内存 (在单道批系统时)，因此操作系统就需要确定某种算法，决定作业调度内存的顺序。</p>
-<p><strong>高级调度，就是按某种算法在外存中处于后备队列的作业中挑选一个(或多个)作业，给它分配内存等必要资源，并建立相应的进程(建立PCB)，以使它(们)获得竞争处理机的权利</strong>。</p>
-<p>高级调度是外存与内存之间的调度。在这里，每个作业只调入一次，调出一次。作业调入时会建立相应的PCB，作业调出时才撤销PCB。高级调度主要是指调入的问题，因为只有调入的时机需要操作系统来确定，而调出的时机必然是作业运行结束后。</p>
-<p>这种调度就好像刚刚的上厕所问题，厕所外的人处于后备队列，而高级调度的任务就类似把人从厕所外调入到厕所内。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145600682.png" alt="在这里插入图片描述"></p>
-<h3 id="中级调度-外存-–-gt-内存"><a href="#中级调度-外存-–-gt-内存" class="headerlink" title="中级调度 (外存 –&gt; 内存)"></a>中级调度 (外存 –&gt; 内存)</h3><p>背景：在引入了虚拟存储技术之后，操作系统可将暂时不能运行的进程调至外存等待。等它重新具备了运行条件且内存稍有空闲时，操作系统再把它调回内存。</p>
-<p>回顾一下，我们之前说过进程有几种状态，如 就绪态、阻塞态、运行态…，那被调到外存等待的进程处于什么状态呢？这些进程会处于挂起态。值得注意的，该进程的数据段和代码段会被调回外存，但PCB依旧会留在内存中的，并不会被调回外存，因为操作系统只有通过该进程的PCB，才能对其进行管理。被挂起进程的PCB会被操作系统放到挂起队列中。</p>
-<ul>
-<li><p><strong>中级调度，就是决定将哪个挂起状态的进程从外存重新调回内存。</strong></p>
-</li>
-<li><p><strong>注意和高级调度区分，虽然同样是从外存调到内存，但高级调度是调入，中级调度是调回。</strong></p>
-</li>
-</ul>
-<p>由于一个进程可能会被多次调出、调回内存，<strong>因此中级调度发生的频率要比高级调度的高。</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145731829.png" alt="在这里插入图片描述"></p>
-<p><strong>补充：进程的挂起态与七状态模型</strong><br>暂时调到外存等待的进程状态为挂起态。挂起态其实又可以进一步细分为就绪挂起、阻塞挂起两种状态，于是，五状态模型现在变成了七状态模型。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145817338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p> 注意：</p>
-<ul>
-<li><strong>注意”挂起态”和”阻塞态”的区别，两种状态都是暂时不能获得CPU的服务，但挂起态是将进程实体(除PCB外)调到外存，而阻塞态的进程实体还留存在内存中。</strong></li>
-<li><strong>有的操作系统不只把挂起态分为阻塞挂起和就绪挂起，甚至会根据阻塞原因的不同把阻塞挂起态的进程进一步细分为多个队列。</strong></li>
-</ul>
-<h3 id="低级调度-内存-–-gt-CPU"><a href="#低级调度-内存-–-gt-CPU" class="headerlink" title="低级调度 (内存 –&gt; CPU)"></a>低级调度 (内存 –&gt; CPU)</h3><p>低级调度的主要任务是按照某种规则从就绪队列中选取一个进程，将CPU分配给它。低级调度是操作系统中最基本的一种调度，在一般的操作系统中都必须配置低级调度。而且低级调度的频率很高，一般几十毫秒一次。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145934323.png" alt="在这里插入图片描述"></p>
-<p><strong>又是一个有味道的例子</strong><br>故事背景：现在有很多个人想上厕所，他们面前有一间厕所，厕所里面有三个马桶。<br>接下来，我们把厕所看作是内存，马桶看作是CPU，现在我们来看看这三种调度与这例子的类比。</p>
-<ul>
-<li><strong>高级调度：研究怎么让还没进入过厕所的人进入厕所。(厕所外 –&gt; 厕所内，之前一直在厕所外)</strong></li>
-<li><strong>中级调度：有的人进入了厕所，但是尿不出来，于是他们被赶了出去。中级调度就是研究怎么让这些被赶出去的人再次回到厕所。 (厕所外 –&gt;<br>厕所内，之前进入过厕所)</strong></li>
-<li><strong>低级调度：研究怎么给厕所内的人分配马桶。(厕所内 –&gt; 马桶上)</strong></li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://img-blog.csdnimg.cn/20200425150048940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+        <h1 id="什么是json"><a href="#什么是json" class="headerlink" title="什么是json"></a>什么是json</h1><p>JSON (JavaScript Object Notation, JS 对象标记) 是一种轻量级的数据交换格式。它基于 ECMAScript (w3c制定的js规范)的一个子集，采用完全独立于编程语言的文本格式来存储和表示数据。简洁和清晰的层次结构使得 JSON 成为理想的数据交换语言。 易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。——百度百科</p>
+<p>数据传输是我们在敲代码时，经常遇到的一个场景,前后端交互。给数据一个统一的格式有利于我们编写和解析数据。</p>
+<p>json，<strong>是一种数据格式</strong>，在与后端的数据交互中有较为广泛的应用。</p>
+<h1 id="json的语法规则"><a href="#json的语法规则" class="headerlink" title="json的语法规则"></a>json的语法规则</h1><p>JSON 的语法规则十分简单，可称得上“优雅完美”，总结起来有：<br>数组（Array）用方括号(“[]”)表示。<br>对象（Object）用大括号（”{}”）表示。<br>名称/值对（name/value）组合成数组和对象。<br>名称（name）置于双引号中，值（value）有字符串、数值、布尔值、null、对象和数组。<br>并列的数据之间用逗号（“,”）分隔</p>
+<h1 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h1><p>在js中我们使用的js对象进行处理，但是在与后端数据交换的时候，我们发送规定的json格式的字符串，所以在给后端发送或接受数据的时候，需要转义</p>
+<p>{name:”myname”,password:123456}</p>
+<p>“{“name”:”myname”,”password”:123456}”</p>
+<p>其中json字符串转js对象，调用parse方法：</p>
+<p>js对象 = JSON.parse(json字符串);</p>
+<p>js对象转json字符串，调用stringify方法：</p>
+<p>json字符串 = JSON.dump(js对象);</p>
+<h1 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"jsonmy.hpp"</span></span></span><br><span class="line"><span class="keyword">using</span> json=nlohmann::json;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//json序列化示例一</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    json js;</span><br><span class="line">    js[<span class="string">"mes_type"</span>]=<span class="number">2</span>;</span><br><span class="line">    js[<span class="string">"from"</span>]=<span class="string">"zhang san"</span>;</span><br><span class="line">    js[<span class="string">"to"</span>]=<span class="string">"li si"</span>;</span><br><span class="line">    js[<span class="string">"msg"</span>]=<span class="string">"what are you doing now?"</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;js&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> sendBuf=js.dump();<span class="comment">//将json格式转化为指定格式</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;sendBuf.c_str()&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//将string转化为char *</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//json序列化示例二</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    json js;</span><br><span class="line">    js[<span class="string">"id"</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    js[<span class="string">"name"</span>]=<span class="string">"zhang san"</span>;</span><br><span class="line">    js[<span class="string">"msg"</span>]=&#123;&#123;<span class="string">"li si"</span>,<span class="string">"hello world"</span>&#125;,&#123;<span class="string">"zhang san"</span>,<span class="string">"hello china"</span>&#125;&#125;;<span class="comment">//嵌套json</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;js&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//json序列化示例三</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    json js;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;vec;</span><br><span class="line">    vec.push_back(<span class="number">1</span>);</span><br><span class="line">    vec.push_back(<span class="number">2</span>);</span><br><span class="line">    vec.push_back(<span class="number">3</span>);</span><br><span class="line">    vec.push_back(<span class="number">4</span>);</span><br><span class="line">    vec.push_back(<span class="number">5</span>);</span><br><span class="line">    js[<span class="string">"list"</span>]=vec;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="built_in">string</span>&gt;m;</span><br><span class="line">    m.insert(&#123;<span class="number">1</span>,<span class="string">"黄山"</span>&#125;);</span><br><span class="line">    m.insert(&#123;<span class="number">2</span>,<span class="string">"华山"</span>&#125;);</span><br><span class="line">    m.insert(&#123;<span class="number">3</span>,<span class="string">"泰山"</span>&#125;);</span><br><span class="line">    js[<span class="string">"path"</span>]=m;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;js&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">string</span> sendBuf=js.dump();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;sendBuf&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">fun4</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    json js;</span><br><span class="line">    js[<span class="string">"msg_type"</span>]=<span class="number">2</span>;</span><br><span class="line">    js[<span class="string">"from"</span>]=<span class="string">"zhang san"</span>;</span><br><span class="line">    js[<span class="string">"to"</span>]=<span class="string">"li si"</span>;</span><br><span class="line">    js[<span class="string">"msg"</span>]=<span class="string">"what are you doing now?"</span>;</span><br><span class="line">    <span class="built_in">string</span> sendBuf=js.dump();</span><br><span class="line">    <span class="keyword">return</span> sendBuf;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//fun1();</span></span><br><span class="line">    <span class="comment">//fun2();</span></span><br><span class="line">    <span class="comment">//fun3();</span></span><br><span class="line">    <span class="built_in">string</span> recvBuf=fun4();</span><br><span class="line">    json js=json::parse(recvBuf);<span class="comment">//反序列化</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;js[<span class="string">"msg_type"</span>]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 
       
     </div>
@@ -437,7 +410,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/" title="操作系统——三级调度（作业、内存、进程)" target="_blank" rel="external">https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/</a>
+      <a href="https://josiasanas.github.io/2020/05/04/json%E6%A6%82%E8%BF%B0%EF%BC%88%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89/" title="json概述(序列化与反序列化)" target="_blank" rel="external">https://josiasanas.github.io/2020/05/04/json%E6%A6%82%E8%BF%B0%EF%BC%88%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -484,12 +457,12 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95/" title="操作系统——进程调度的几种算法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/2020/05/04/epoll%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3%E5%8F%8Aepoll%E5%8F%8D%E5%BA%94%E5%A0%86%E6%A8%A1%E5%9E%8B/" title="epoll原理详解及epoll反应堆模型"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" title="操作系统——进程与线程"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2020/05/04/%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E6%A0%91%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86/" title="算法——树的几种遍历"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
