@@ -17,28 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>操作系统——进程同步互斥之信号量机制 | Hexo</title>
-  <meta name="description" content="0、信号量机制 信息量其实就是一个变量（一个整数，也可以是更复杂的记录变量），可以用一个信号量表示系统中某种资源的数量。比如：系统中只有一台打印机，就可以设置为1的信号量 用户进程可以通过使用操作系统提供的一对原语来对信号量进行操作，从而实现进程互斥，进程同步 一对原语：wait(s) 和 signal(s) 简称P、V 操作（来自荷兰语proberen,verhogen） 原语：是一种特殊的程序">
+  <title>C++语法——bind函数 | Hexo</title>
+  <meta name="description" content="bind函数的使用详解可以将bind函数看作是一个通用的函数适配器，它接受一个可调用对象，生成一个新的可调用对象来“适应”原对象的参数列表。调用bind的一般形式：auto newCallable &#x3D; bind(callable,arg_list);&#96; 其中，newCallable本身是一个可调用对象，arg_list是一个逗号分隔的参数列表，对应给定的callable的参数。即，当我们调用new">
 <meta property="og:type" content="article">
-<meta property="og:title" content="操作系统——进程同步互斥之信号量机制">
-<meta property="og:url" content="https://josiasanas.github.io/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E4%B9%8B%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:title" content="C++语法——bind函数">
+<meta property="og:url" content="https://josiasanas.github.io/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="0、信号量机制 信息量其实就是一个变量（一个整数，也可以是更复杂的记录变量），可以用一个信号量表示系统中某种资源的数量。比如：系统中只有一台打印机，就可以设置为1的信号量 用户进程可以通过使用操作系统提供的一对原语来对信号量进行操作，从而实现进程互斥，进程同步 一对原语：wait(s) 和 signal(s) 简称P、V 操作（来自荷兰语proberen,verhogen） 原语：是一种特殊的程序">
+<meta property="og:description" content="bind函数的使用详解可以将bind函数看作是一个通用的函数适配器，它接受一个可调用对象，生成一个新的可调用对象来“适应”原对象的参数列表。调用bind的一般形式：auto newCallable &#x3D; bind(callable,arg_list);&#96; 其中，newCallable本身是一个可调用对象，arg_list是一个逗号分隔的参数列表，对应给定的callable的参数。即，当我们调用new">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200427161519123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200427161540409.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200427161602585.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020042716162117.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200427161700689.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200427161719339.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200427161736626.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2020-04-27T08:44:27.022Z">
-<meta property="article:modified_time" content="2020-04-30T06:07:16.459Z">
+<meta property="article:published_time" content="2020-05-05T15:23:18.424Z">
+<meta property="article:modified_time" content="2020-05-05T15:25:18.769Z">
 <meta property="article:author" content="JosiasAnas">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200427161519123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://josiasanas.github.io/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E4%B9%8B%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6/index.html">
+  <link rel="canonical" href="https://josiasanas.github.io/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -353,14 +346,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-操作系统——进程同步互斥之信号量机制" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-C++语法——bind函数" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      操作系统——进程同步互斥之信号量机制
+      C++语法——bind函数
     </h1>
   
 
@@ -368,57 +361,41 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E4%B9%8B%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6/" class="article-date">
-	  <time datetime="2020-04-27T08:44:27.022Z" itemprop="datePublished">2020-04-27</time>
+	<a href="/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/" class="article-date">
+	  <time datetime="2020-05-05T15:23:18.424Z" itemprop="datePublished">2020-05-05</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+    <a class="article-category-link" href="/categories/C-%E8%AF%AD%E6%B3%95/">C++语法</a>
   </span>
 
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/C/" rel="tag">C++</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E4%B9%8B%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="0、信号量机制"><a href="#0、信号量机制" class="headerlink" title="0、信号量机制"></a>0、信号量机制</h1><ul>
-<li>信息量其实就是一个变量（一个整数，也可以是更复杂的记录变量），可以用一个信号量表示系统中某种资源的数量。比如：系统中只有一台打印机，就可以设置为1的信号量</li>
-<li>用户进程可以通过使用操作系统提供的一对原语来对信号量进行操作，从而实现进程互斥，进程同步</li>
-<li>一对原语：<strong>wait(s) 和 signal(s) 简称P、V 操作</strong>（来自荷兰语proberen,verhogen）</li>
-<li><strong>原语：</strong>是一种特殊的程序，最接近底层硬件，其执行操作只能一气呵成，不能被中断。是由关中断 /<br>开中断指令实现的。软件解决方案的主要问题就是进入区的操作不能一气呵成，因此把进入区、退出区的操作都用原语来实现，就能避免问题</li>
-</ul>
-<h2 id="1、整型信号量"><a href="#1、整型信号量" class="headerlink" title="1、整型信号量"></a>1、整型信号量</h2><p><img src="https://img-blog.csdnimg.cn/20200427161519123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="2、记录型信号量"><a href="#2、记录型信号量" class="headerlink" title="2、记录型信号量"></a>2、记录型信号量</h2><p><img src="https://img-blog.csdnimg.cn/20200427161540409.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>例子：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200427161602585.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>1、p0执行，wait操作s.value–,剩余资源1，切换p1  等待队列 null</p>
-<p>2、p1执行，wait操作s.value–,剩余资源0，切换p2  等待队列 null</p>
-<p>3、p2执行，wait操作s.value–,剩余资源-1表示有1进程等待，执行wait里block操作进入等待队列 等待队p2</p>
-<p>4、p3执行，wait操作s.value–,剩余资源-2表示有2进程等待，执行wait里block操作进入等待队列 等待队p2-&gt;p3</p>
-<p>5、p0执行，signal操作s.value++,剩余资源&lt;0表示有进程等待，执行signal里wakeup操作唤醒等待队列队头p2进程 等待队列p3</p>
-<p>6、p2执行，signal操作s.value++,剩余资源&lt;0表示有进程等待，执行signal里wakeup操作唤醒等待队列队头p3进程 等待队列null</p>
-<p>7、p1执行，signal操作s.value++,剩余资源1 等待队列null</p>
-<p>8、p3执行，signal操作s.value++,剩余资源2 等待队列null</p>
-<p>解析：</p>
-<p><img src="https://img-blog.csdnimg.cn/2020042716162117.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h1 id="二、信号机制实现进程互斥"><a href="#二、信号机制实现进程互斥" class="headerlink" title="二、信号机制实现进程互斥"></a>二、信号机制实现进程互斥</h1><p>当没有进程在临界区时，任意一个进程要进入临界区执行P操作，把mutex–,然后进入临界区</p>
-<p>而当有进程存在于临界区时，mutex的值为0，再有进程要进临界区，执行p操作将会被阻塞，直至在临界区中的进程推出这样便实现了临界区的互斥</p>
-<p><img src="https://img-blog.csdnimg.cn/20200427161700689.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h1 id="三、信号机制实现进程同步"><a href="#三、信号机制实现进程同步" class="headerlink" title="三、信号机制实现进程同步"></a>三、信号机制实现进程同步</h1><p>进程同步：让各并发进程按要求有序地推进</p>
-<p><img src="https://img-blog.csdnimg.cn/20200427161719339.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p><strong>简单总结：</strong></p>
-<ul>
-<li>同步问题中，信号量设为0，如果某个行为要用到某种资源，那么就再那个行为前面p那种资源，如果某个行为会提供某种资源，就再那个行为后面v那种资源（<strong>前操作之后V,后操作之前P</strong>）</li>
-<li>互斥问题：<strong>信号量设为1,P、V操作要仅仅夹着使用互斥资源的那个行为</strong>（临界区），中间不能有其他冗余代码</li>
-</ul>
-<h1 id="四、信号机制实现前驱关系"><a href="#四、信号机制实现前驱关系" class="headerlink" title="四、信号机制实现前驱关系"></a>四、信号机制实现前驱关系</h1><p><img src="https://img-blog.csdnimg.cn/20200427161736626.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+        <h1 id="bind函数的使用详解"><a href="#bind函数的使用详解" class="headerlink" title="bind函数的使用详解"></a>bind函数的使用详解</h1><p>可以将bind函数看作是一个通用的函数适配器，它接受一个可调用对象，生成一个新的可调用对象来“适应”原对象的参数列表。<br>调用bind的一般形式：<strong>auto newCallable = bind(callable,arg_list);`</strong></p>
+<p>其中，newCallable本身是一个可调用对象，arg_list是一个逗号分隔的参数列表，对应给定的callable的参数。即，当我们调用newCallable时，newCallable会调用callable,并传给它arg_list中的参数。</p>
+<p>arg_list中的参数可能包含形如_n的名字，其中n是一个整数，这些参数是“占位符”，表示newCallable的参数，它们占据了传递给newCallable的参数的“位置”。数值n表示生成的可调用对象中参数的位置：_1为newCallable的第一个参数，_2为第二个参数，以此类推。</p>
+<h2 id="1-绑定普通函数"><a href="#1-绑定普通函数" class="headerlink" title="1.绑定普通函数"></a>1.绑定普通函数</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">plus</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//表示绑定函数plus 参数分别由调用 func1 的第一，二个参数指定</span></span><br><span class="line">   function&lt;<span class="keyword">int</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; func1 = <span class="built_in">std</span>::bind(plus, placeholders::_1, placeholders::_2);</span><br><span class="line">   </span><br><span class="line">  <span class="comment">//func2的类型为 function&lt;void(int, int, int)&gt; 与func1类型一样</span></span><br><span class="line">   <span class="keyword">auto</span>  func2 = <span class="built_in">std</span>::bind(plus,<span class="number">1</span>,<span class="number">2</span>);   <span class="comment">//表示绑定函数 plus 的第一，二为： 1， 2 </span></span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;func1(<span class="number">1</span>,<span class="number">2</span>)&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//3</span></span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;func2()&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//3</span></span><br><span class="line">   retunrn <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-绑定类的成员函数"><a href="#2-绑定类的成员函数" class="headerlink" title="2.绑定类的成员函数"></a>2.绑定类的成员函数</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plus</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">   	<span class="function"><span class="keyword">int</span> <span class="title">plus</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function">   	</span>&#123;</span><br><span class="line">   	    <span class="keyword">return</span> a+b;</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   Plus p;</span><br><span class="line">   <span class="comment">// 指针形式调用成员函数</span></span><br><span class="line">   function&lt;<span class="keyword">int</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; func1 = <span class="built_in">std</span>::bind(&amp;Plus::plus,&amp;p, placeholders::_1, placeholders::_2);</span><br><span class="line">  <span class="comment">// 对象形式调用成员函数</span></span><br><span class="line">   function&lt;<span class="keyword">int</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; func2 = <span class="built_in">std</span>::bind(&amp;Plus::plus,p, placeholders::_1, placeholders::_2);</span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;func1(<span class="number">1</span>,<span class="number">2</span>)&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//3</span></span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;func2(<span class="number">1</span>,<span class="number">2</span>)&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//3</span></span><br><span class="line">   retunrn <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>占位符_1位于placeholders的命名空间，而placeholders位于std的命名空间中</p>
+<h2 id="3-绑定类静态成员函数"><a href="#3-绑定类静态成员函数" class="headerlink" title="3.绑定类静态成员函数"></a>3.绑定类静态成员函数</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plus</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">plus</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">		    <span class="keyword">return</span> a+b;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   function&lt;<span class="keyword">int</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; func1 = <span class="built_in">std</span>::bind(&amp;Plus::plus, placeholders::_1, placeholders::_2);</span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;func1(<span class="number">1</span>,<span class="number">2</span>)&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//3</span></span><br><span class="line">   retunrn <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -428,7 +405,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://josiasanas.github.io/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E4%B9%8B%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6/" title="操作系统——进程同步互斥之信号量机制" target="_blank" rel="external">https://josiasanas.github.io/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E4%B9%8B%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6/</a>
+      <a href="https://josiasanas.github.io/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/" title="C++语法——bind函数" target="_blank" rel="external">https://josiasanas.github.io/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -474,13 +451,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E4%BA%92%E6%96%A5%E7%9A%84%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95/" title="操作系统——进程互斥的软硬件实现方法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95/" title="操作系统——进程调度的几种算法"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2020/05/04/epoll%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3%E5%8F%8Aepoll%E5%8F%8D%E5%BA%94%E5%A0%86%E6%A8%A1%E5%9E%8B/" title="epoll原理详解及epoll反应堆模型"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
