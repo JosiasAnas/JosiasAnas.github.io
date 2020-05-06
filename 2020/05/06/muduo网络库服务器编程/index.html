@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>muduo网络库服务器编程 | Hexo</title>
+  <meta name="description" content="muduo库介绍muduo是一个高质量的事件驱动型的网络库，其核心代码不超过4500行，使用的non-blocking IO(IO multiplexing)+ one loop perthread模型。此模型每个IO线程里面只有一个事件循环(即一个Reactor)，处理读写和定时事件，激活的事件通过回调方式提供用户处理业务逻辑。 在linux下的话，可以把事件当做一个文件描述符，换句话也就是说一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="muduo网络库服务器编程">
+<meta property="og:url" content="https://josiasanas.github.io/2020/05/06/muduo%E7%BD%91%E7%BB%9C%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="muduo库介绍muduo是一个高质量的事件驱动型的网络库，其核心代码不超过4500行，使用的non-blocking IO(IO multiplexing)+ one loop perthread模型。此模型每个IO线程里面只有一个事件循环(即一个Reactor)，处理读写和定时事件，激活的事件通过回调方式提供用户处理业务逻辑。 在linux下的话，可以把事件当做一个文件描述符，换句话也就是说一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-06T14:38:18.343Z">
+<meta property="article:modified_time" content="2020-05-06T14:39:43.806Z">
+<meta property="article:author" content="JosiasAnas">
+<meta property="article:tag" content="muduo">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://josiasanas.github.io/2020/05/06/muduo%E7%BD%91%E7%BB%9C%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/images/as.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">JosiasAnas</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">改变一点，幸运一点</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京,中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E8%AF%AD%E6%B3%95/">C++语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/">技术栈</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/epoll/" rel="tag">epoll</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/json/" rel="tag">json</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/muduo/" rel="tag">muduo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C/" style="font-size: 13px;">C++</a> <a href="/tags/epoll/" style="font-size: 13px;">epoll</a> <a href="/tags/json/" style="font-size: 13px;">json</a> <a href="/tags/muduo/" style="font-size: 13px;">muduo</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 13px;">排序</a> <a href="/tags/%E6%A0%91/" style="font-size: 13px;">树</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">9</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/">技术栈</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/06/muduo%E7%BD%91%E7%BB%9C%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/" class="title">muduo网络库服务器编程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-06T14:38:18.343Z" itemprop="datePublished">2020-05-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/C-%E8%AF%AD%E6%B3%95/">C++语法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/" class="title">C++语法——bind函数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-05T15:23:18.424Z" itemprop="datePublished">2020-05-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/">技术栈</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/04/epoll%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3%E5%8F%8Aepoll%E5%8F%8D%E5%BA%94%E5%A0%86%E6%A8%A1%E5%9E%8B/" class="title">epoll原理详解及epoll反应堆模型</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-04T13:47:47.527Z" itemprop="datePublished">2020-05-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/">技术栈</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/04/json%E6%A6%82%E8%BF%B0%EF%BC%88%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89/" class="title">json概述(序列化与反序列化)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-04T12:31:53.987Z" itemprop="datePublished">2020-05-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/04/%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E6%A0%91%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86/" class="title">算法——树的几种遍历</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-04T06:59:40.494Z" itemprop="datePublished">2020-05-04</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-muduo网络库服务器编程" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      muduo网络库服务器编程
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/05/06/muduo%E7%BD%91%E7%BB%9C%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/" class="article-date">
+	  <time datetime="2020-05-06T14:38:18.343Z" itemprop="datePublished">2020-05-06</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/">技术栈</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/muduo/" rel="tag">muduo</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/06/muduo%E7%BD%91%E7%BB%9C%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="muduo库介绍"><a href="#muduo库介绍" class="headerlink" title="muduo库介绍"></a>muduo库介绍</h1><p>muduo是一个高质量的事件驱动型的网络库，其核心代码不超过4500行，使用的non-blocking IO(IO multiplexing)+ one loop perthread模型。此模型每个IO线程里面只有一个事件循环(即一个Reactor)，处理读写和定时事件，激活的事件通过回调方式提供用户处理业务逻辑。</p>
+<p>在linux下的话，可以把事件当做一个文件描述符，换句话也就是说一个file descriptor只能由一个线程读写。一个线程最多只有一个EventLoop，而EventLoop中的循环即是在不停的监视这些描述符，当描述符可读或可写的时候，通过回调函数提供给用户处理。</p>
+<p>这样我们可以很方便地把不同的socket套接字的描述符放到不同的线程去， 也可以把一些socket放到一个线程里，这样这些socket就是线程安全的，因为始终只有EventLoo所在线程在读写它们，极大的降低了我们的编程复杂性。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">muduo网络库给用户提供了两个主要类</span></span><br><span class="line"><span class="comment">TcpServer :用于编写服务器程序的</span></span><br><span class="line"><span class="comment">TcpClient :用于编写客户端程序的</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">epoll  +  线程池</span></span><br><span class="line"><span class="comment">好处：能够把网络I/O的代码和业务代码区分开</span></span><br><span class="line"><span class="comment">                                                        用户的连接和断开   用户的可读写事件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;muduo/net/TcpServer.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;muduo/net/EventLoop.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> muduo;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> muduo::net;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">基于muduo网络库开发服务器程序</span></span><br><span class="line"><span class="comment">1，组合TcpServer对象</span></span><br><span class="line"><span class="comment">2，创建EventLoop事件循环对象的指针</span></span><br><span class="line"><span class="comment">3，明确TcpServer构造函数需要参数，输出ChatServer的构造函数</span></span><br><span class="line"><span class="comment">4.在当前服务器类的构造函数中，注册处理连接的回调函数和处理读写事件的回调函数</span></span><br><span class="line"><span class="comment">5.设置合适的服务端线程数量，muduo库会自己分配I/O线程和worker线程</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChatServer</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ChatServer(EventLoop* loop,</span><br><span class="line">            <span class="keyword">const</span> InetAddress&amp; listenAddr,</span><br><span class="line">            <span class="keyword">const</span> <span class="built_in">string</span>&amp; nameArg):_server(loop,listenAddr,nameArg),_loop(loop)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//给服务器注册用户连接的创建和断开回调</span></span><br><span class="line">                _server.setConnectionCallback(<span class="built_in">std</span>::bind(&amp;ChatServer::onConnection,<span class="keyword">this</span>,_1));</span><br><span class="line">                <span class="comment">//给服务器注册用户读写事件回调</span></span><br><span class="line">                _server.setMessageCallback(<span class="built_in">std</span>::bind(&amp;ChatServer::onMessage,<span class="keyword">this</span>,_1,_2,_3));</span><br><span class="line">                <span class="comment">//设置服务器端的线程数量  1个I/O线程  3个worker线程</span></span><br><span class="line">                _server.setThreadNum(<span class="number">4</span>);</span><br><span class="line">           </span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//开启事件循环</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                _server.start();</span><br><span class="line">            &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//专门处理用户的连接创建和断开</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onConnection</span><span class="params">(<span class="keyword">const</span> TcpConnectionPtr&amp;conn)</span></span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(conn-&gt;connected())</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;conn-&gt;peerAddress().toIpPort()&lt;&lt;<span class="string">"-&gt;"</span>&lt;&lt;conn-&gt;localAddress().toIpPort()&lt;&lt;<span class="string">"state:online"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;conn-&gt;peerAddress().toIpPort()&lt;&lt;<span class="string">"-&gt;"</span>&lt;&lt;conn-&gt;localAddress().toIpPort()&lt;&lt;<span class="string">"state:offline"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">                conn-&gt;shutdown();</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//专门处理用户的读写事件</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(<span class="keyword">const</span> TcpConnectionPtr&amp; conn,<span class="comment">//连接</span></span></span></span><br><span class="line"><span class="function"><span class="params">                            Buffer*buffer,<span class="comment">//缓冲区</span></span></span></span><br><span class="line"><span class="function"><span class="params">                            Timestamp time)</span><span class="comment">//接受到的数据的时间信息</span></span></span><br><span class="line"><span class="function">                            </span>&#123;</span><br><span class="line">                                    <span class="built_in">string</span> buf=buffer-&gt;retrieveAllAsString();</span><br><span class="line">                                    <span class="built_in">cout</span>&lt;&lt;<span class="string">"recv data:"</span>&lt;&lt;buf&lt;&lt;<span class="string">"time:"</span>&lt;&lt;time.toString()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">                                    conn-&gt;send(buf);</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">    TcpServer _server;</span><br><span class="line">    EventLoop *_loop;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    EventLoop loop;<span class="comment">//epoll</span></span><br><span class="line">    <span class="function">InetAddress <span class="title">addr</span><span class="params">(<span class="string">"127.0.0.1"</span>,<span class="number">6000</span>)</span></span>;</span><br><span class="line">    ChatServer _server(&amp;loop,addr,<span class="string">"ChatServer"</span>);</span><br><span class="line">    _server.start();<span class="comment">//listenfd epoll_ctl=&gt;epoll</span></span><br><span class="line">    loop.loop();<span class="comment">//epoll_wait以阻塞方式等待新用户连接，已连接用户的读写事件等</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="执行步骤"><a href="#执行步骤" class="headerlink" title="执行步骤"></a>执行步骤</h1><p>在服务端启动程序</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">josiasanas@HuaWei:~/code/test/testmuduo$ g++ -o server muduo_server.cpp -lmuduo_net -lmuduo_base -pthread</span><br><span class="line">josiasanas@HuaWei:~/code/test/testmuduo$ ls</span><br><span class="line">muduo_server.cpp  server</span><br><span class="line">josiasanas@HuaWei:~/code/test/testmuduo$ ./server</span><br></pre></td></tr></table></figure>
+<p>在客户端连接</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">josiasanas@HuaWei:~/code/test/testmuduo$ telnet <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">6000</span></span><br><span class="line">Trying <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>...</span><br><span class="line">Connected to <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>.</span><br><span class="line">Escape character is '^]'.</span><br><span class="line"></span><br><span class="line"><span class="number">20200506</span> <span class="number">13</span>:<span class="number">54</span>:<span class="number">17.744971</span>Z  <span class="number">4012</span> INFO  TcpServer::newConnection [ChatServer] - <span class="keyword">new</span> connection [ChatServer<span class="number">-127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6000</span>#<span class="number">1</span>] from <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">60800</span> - TcpServer.cc:<span class="number">80</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">60800</span>-&gt;<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6000</span>state:online</span><br></pre></td></tr></table></figure>
+<p>客户输入内容</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello</span><br></pre></td></tr></table></figure>
+
+<p>服务端显示内容</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">recv data:hello</span><br><span class="line">time:<span class="number">1588773773.315230</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">60806</span>-&gt;<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6000</span>state:offline</span><br><span class="line"><span class="number">20200506</span> <span class="number">14</span>:<span class="number">02</span>:<span class="number">58.756452</span>Z  <span class="number">4012</span> INFO  TcpServer::removeConnectionInLoop [ChatServer] - connection ChatServer<span class="number">-127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6000</span>#<span class="number">2</span> - TcpServer.cc:<span class="number">109</span></span><br></pre></td></tr></table></figure>
+<p>客户端结束命令（Ctrl+】）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">^]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">telnet&gt; quit</span><br><span class="line">Connection closed.</span><br></pre></td></tr></table></figure>
+
+<p>服务端端结束命令（Ctrl+C）</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://josiasanas.github.io/2020/05/06/muduo%E7%BD%91%E7%BB%9C%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/" title="muduo网络库服务器编程" target="_blank" rel="external">https://josiasanas.github.io/2020/05/06/muduo%E7%BD%91%E7%BB%9C%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/as.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">JosiasAnas</span><small class="ml-1x">改变一点，幸运一点</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2020/05/05/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94bind%E5%87%BD%E6%95%B0/" title="C++语法——bind函数"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
