@@ -17,26 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>操作系统——三级调度（作业、内存、进程) | Hexo</title>
-  <meta name="description" content="@TOC 调度调度的基本概念调度研究的问题：当有一堆任务要处理，但由于资源有限，这些事情没法同时处理。这就需要确定某种规则来决定处理这些任务的顺序，这就是调度研究的问题。 举个有味道的例子：现在有4个人要上厕所(他们几乎同时到达)，他们分别需要使用厕所3分钟、10分钟、1分钟、4分钟。但是他们面前只有一个厕所，而且厕所里面只有一个马桶，那我们应该怎么确定他们上厕所的顺序呢？ 我们有以下的方案：">
+  <title>C++语法——创建vector_T_容器 | Hexo</title>
+  <meta name="description" content="vector&lt;T&gt; 容器是包含 T 类型元素的序列容器，和 array&lt;T，N&gt; 容器相似，不同的是 vector&lt;T&gt; 容器的大小可以自动增长，从而可以包含任意数量的元素；因此类型参数 T 不再需要模板参数 N。只要元素个数超出 vector 当前容量，就会自动分配更多的空间。只能在容器尾部高效地删除或添加元素。 vector&lt;T&gt; 容器可以方便、">
 <meta property="og:type" content="article">
-<meta property="og:title" content="操作系统——三级调度（作业、内存、进程)">
-<meta property="og:url" content="https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/index.html">
+<meta property="og:title" content="C++语法——创建vector_T_容器">
+<meta property="og:url" content="https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="@TOC 调度调度的基本概念调度研究的问题：当有一堆任务要处理，但由于资源有限，这些事情没法同时处理。这就需要确定某种规则来决定处理这些任务的顺序，这就是调度研究的问题。 举个有味道的例子：现在有4个人要上厕所(他们几乎同时到达)，他们分别需要使用厕所3分钟、10分钟、1分钟、4分钟。但是他们面前只有一个厕所，而且厕所里面只有一个马桶，那我们应该怎么确定他们上厕所的顺序呢？ 我们有以下的方案：">
+<meta property="og:description" content="vector&lt;T&gt; 容器是包含 T 类型元素的序列容器，和 array&lt;T，N&gt; 容器相似，不同的是 vector&lt;T&gt; 容器的大小可以自动增长，从而可以包含任意数量的元素；因此类型参数 T 不再需要模板参数 N。只要元素个数超出 vector 当前容量，就会自动分配更多的空间。只能在容器尾部高效地删除或添加元素。 vector&lt;T&gt; 容器可以方便、">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145600682.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145731829.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145817338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425145934323.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200425150048940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2020-04-25T12:39:21.706Z">
-<meta property="article:modified_time" content="2020-04-30T06:07:40.688Z">
+<meta property="article:published_time" content="2020-05-07T15:38:10.066Z">
+<meta property="article:modified_time" content="2020-05-07T15:39:28.311Z">
 <meta property="article:author" content="JosiasAnas">
+<meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200425145600682.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/index.html">
+  <link rel="canonical" href="https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -351,14 +346,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-操作系统——三级调度（作业、内存、进程)" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-C++语法——创建vector_T_容器" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      操作系统——三级调度（作业、内存、进程)
+      C++语法——创建vector_T_容器
     </h1>
   
 
@@ -366,68 +361,62 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/" class="article-date">
-	  <time datetime="2020-04-25T12:39:21.706Z" itemprop="datePublished">2020-04-25</time>
+	<a href="/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/" class="article-date">
+	  <time datetime="2020-05-07T15:38:10.066Z" itemprop="datePublished">2020-05-07</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+    <a class="article-category-link" href="/categories/C-%E8%AF%AD%E6%B3%95/">C++语法</a>
   </span>
 
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/STL/" rel="tag">STL</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>@<a href="文章目录">TOC</a></p>
-<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><h2 id="调度的基本概念"><a href="#调度的基本概念" class="headerlink" title="调度的基本概念"></a>调度的基本概念</h2><p>调度研究的问题：当有一堆任务要处理，但由于资源有限，这些事情没法同时处理。这就需要确定某种规则来决定处理这些任务的顺序，这就是调度研究的问题。</p>
-<p>举个有味道的例子：<br>现在有4个人要上厕所(他们几乎同时到达)，他们分别需要使用厕所3分钟、10分钟、1分钟、4分钟。但是他们面前只有一个厕所，而且厕所里面只有一个马桶，那我们应该怎么确定他们上厕所的顺序呢？</p>
-<p>我们有以下的方案：</p>
-<ol>
-<li>谁先来，谁就先用厕所。</li>
-<li>谁需要使用的时间少，谁先用厕所。</li>
-</ol>
-<p>我们先说说第一种方案，这种方案很公平，谁先来谁先用，但是这样会产生一个问题。假如他们来的顺序是10分钟、4分钟、3分钟、1分钟，显然，采用这种方案的话，对于最后一个人，他上厕所1分钟要等17分钟，估计翔都憋不住了吧…<br>我们再说下第二种方案，采用这种方案的话，虽然没有第一种方案公平，但是这4个人的整体平均等待时间是最少的。(平均等待时间 = 每个人等待的时间的和 / 人数)</p>
-<p>在上面的例子中，厕所就是资源，方案就是调度的规则，而调度就是安排他们上厕所。</p>
-<p><strong>我们回到操作系统，在多道程序系统中，进程的数量往往是多于处理机个数的，这样就导致处理机不能并行的处理所有进程。处理机调度，就是从就绪队列中按照某种的算法选择一个进程并将处理机分配给它，以实现进程的并发运行。<br>操作系统的调度有三个层次，分别是高级调度、中级调度和低级调度。下面分别介绍它们。</strong></p>
-<h3 id="高级调度-外存-–-gt-内存"><a href="#高级调度-外存-–-gt-内存" class="headerlink" title="高级调度 (外存 –&gt; 内存)"></a>高级调度 (外存 –&gt; 内存)</h3><p>我们知道是计算机的内存空间是有限，所以有时操作系统无法将用户提交的作业全部放入内存 (在单道批系统时)，因此操作系统就需要确定某种算法，决定作业调度内存的顺序。</p>
-<p><strong>高级调度，就是按某种算法在外存中处于后备队列的作业中挑选一个(或多个)作业，给它分配内存等必要资源，并建立相应的进程(建立PCB)，以使它(们)获得竞争处理机的权利</strong>。</p>
-<p>高级调度是外存与内存之间的调度。在这里，每个作业只调入一次，调出一次。作业调入时会建立相应的PCB，作业调出时才撤销PCB。高级调度主要是指调入的问题，因为只有调入的时机需要操作系统来确定，而调出的时机必然是作业运行结束后。</p>
-<p>这种调度就好像刚刚的上厕所问题，厕所外的人处于后备队列，而高级调度的任务就类似把人从厕所外调入到厕所内。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145600682.png" alt="在这里插入图片描述"></p>
-<h3 id="中级调度-外存-–-gt-内存"><a href="#中级调度-外存-–-gt-内存" class="headerlink" title="中级调度 (外存 –&gt; 内存)"></a>中级调度 (外存 –&gt; 内存)</h3><p>背景：在引入了虚拟存储技术之后，操作系统可将暂时不能运行的进程调至外存等待。等它重新具备了运行条件且内存稍有空闲时，操作系统再把它调回内存。</p>
-<p>回顾一下，我们之前说过进程有几种状态，如 就绪态、阻塞态、运行态…，那被调到外存等待的进程处于什么状态呢？这些进程会处于挂起态。值得注意的，该进程的数据段和代码段会被调回外存，但PCB依旧会留在内存中的，并不会被调回外存，因为操作系统只有通过该进程的PCB，才能对其进行管理。被挂起进程的PCB会被操作系统放到挂起队列中。</p>
-<ul>
-<li><p><strong>中级调度，就是决定将哪个挂起状态的进程从外存重新调回内存。</strong></p>
-</li>
-<li><p><strong>注意和高级调度区分，虽然同样是从外存调到内存，但高级调度是调入，中级调度是调回。</strong></p>
-</li>
-</ul>
-<p>由于一个进程可能会被多次调出、调回内存，<strong>因此中级调度发生的频率要比高级调度的高。</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145731829.png" alt="在这里插入图片描述"></p>
-<p><strong>补充：进程的挂起态与七状态模型</strong><br>暂时调到外存等待的进程状态为挂起态。挂起态其实又可以进一步细分为就绪挂起、阻塞挂起两种状态，于是，五状态模型现在变成了七状态模型。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145817338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p> 注意：</p>
-<ul>
-<li><strong>注意”挂起态”和”阻塞态”的区别，两种状态都是暂时不能获得CPU的服务，但挂起态是将进程实体(除PCB外)调到外存，而阻塞态的进程实体还留存在内存中。</strong></li>
-<li><strong>有的操作系统不只把挂起态分为阻塞挂起和就绪挂起，甚至会根据阻塞原因的不同把阻塞挂起态的进程进一步细分为多个队列。</strong></li>
-</ul>
-<h3 id="低级调度-内存-–-gt-CPU"><a href="#低级调度-内存-–-gt-CPU" class="headerlink" title="低级调度 (内存 –&gt; CPU)"></a>低级调度 (内存 –&gt; CPU)</h3><p>低级调度的主要任务是按照某种规则从就绪队列中选取一个进程，将CPU分配给它。低级调度是操作系统中最基本的一种调度，在一般的操作系统中都必须配置低级调度。而且低级调度的频率很高，一般几十毫秒一次。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200425145934323.png" alt="在这里插入图片描述"></p>
-<p><strong>又是一个有味道的例子</strong><br>故事背景：现在有很多个人想上厕所，他们面前有一间厕所，厕所里面有三个马桶。<br>接下来，我们把厕所看作是内存，马桶看作是CPU，现在我们来看看这三种调度与这例子的类比。</p>
-<ul>
-<li><strong>高级调度：研究怎么让还没进入过厕所的人进入厕所。(厕所外 –&gt; 厕所内，之前一直在厕所外)</strong></li>
-<li><strong>中级调度：有的人进入了厕所，但是尿不出来，于是他们被赶了出去。中级调度就是研究怎么让这些被赶出去的人再次回到厕所。 (厕所外 –&gt;<br>厕所内，之前进入过厕所)</strong></li>
-<li><strong>低级调度：研究怎么给厕所内的人分配马桶。(厕所内 –&gt; 马桶上)</strong></li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://img-blog.csdnimg.cn/20200425150048940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzUyODAyNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+        <p><code>vector&lt;T&gt;</code> 容器是包含 T 类型元素的序列容器，和 <code>array&lt;T，N&gt;</code> 容器相似，不同的是 <code>vector&lt;T&gt;</code> 容器的大小可以自动增长，从而可以包含任意数量的元素；因此类型参数 T 不再需要模板参数 N。只要元素个数超出 vector 当前容量，就会自动分配更多的空间。只能在容器尾部高效地删除或添加元素。</p>
+<p><code>vector&lt;T&gt;</code> 容器可以方便、灵活地代替数组。在大多数时候，都可以用 <code>vector&lt;T&gt;</code> 代替数组存放元素。只要能够意识到，<code>vector&lt;T&gt;</code> 在扩展容量，以 及在序列内部删除或添加元素时会产生一些开销；但大多数情况下，代码不会明显变慢。 为了使用 <code>vector&lt;T&gt;</code> 容器模板，需要在代码中包含头文件 vector。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**创建<span class="built_in">vector</span>&lt;T&gt;容器**</span><br></pre></td></tr></table></figure>
+<p>下面是一个生成存放 double 型元素的 <code>vector&lt;T&gt;</code> 容器示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; values;</span><br></pre></td></tr></table></figure>
+<p>因为容器中没有元素，所以没有分配空间，当添加第一个数据项时，会自动分配内存。可以像下面这样通过调用 reserve() 来增加容器的容量：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">values.reserve(<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+<p>这样就设置了容器的内存分配，至少可以容纳 20 个元素。如果当前的容量已经大于或等于 20 个元素，那么这条语句什么也不做。注意，调用 reserve() 并不会生成任何元素。values 容器这时仍然没有任何元素，直到添加了 20 个元素后，才会分配更多的内存。调用 reserve() 并不会影响现有的元素。</p>
+<p>当然，如果通过调用 reserve() 来增加内存，任何现有的迭代器，例如开始迭代器和结束迭代器，都会失效，所以需要重新生成它们。这是因为，为了增加容器的容量，<code>vector&lt;T&gt;</code> 容器的元素可能已经被复制或移到了新的内存地址。</p>
+<p>创建 vector 容器的另一种方式是使用初始化列表来指定初始值以及元素个数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">int</span>&gt; primes &#123;<span class="number">2u</span>, <span class="number">3u</span>, <span class="number">5u</span>, <span class="number">7u</span>, <span class="number">11u</span>, <span class="number">13u</span>, <span class="number">17u</span>, <span class="number">19u</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>以初始化列表中的値作为元素初始值，生成有 8 个素数的 vector 容器。</p>
+<p>分配内存是比较花费时间的，所以最好只在必要时分配。vector 使用算法来增加容量，这个算法依赖一个经常使用的常对数来实现,这在早些时候会导致分配一些非常小的内存，但是随着 vector 容量的增大，内存增长数也会变大。可以如下所示，使用初始元素个数来生成 vector 容器：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; <span class="title">values</span><span class="params">(<span class="number">20</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这个容器开始时有 20 个元素，它们的默认初始值都为 0。生成容器时，同时指定元素个数，就能够减少空间额外分配的次数，这是一个很好的习惯。</p>
+<p>注意，圆括号中的 20 表示元素的个数，是上述语句的核心。这里不能使用 {}。如果如下所示定义 vector 容器，会产生不同的结果：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; values &#123;<span class="number">20</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>vector 并没有 20 个元素。它只有一个元素，并以 20 作为初始值。添加元素会导致分配额外的内存。</p>
+<p>如果不想用 0 作为默认值，可以指定一个其他值：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; <span class="title">numbers</span><span class="params">(<span class="number">20</span>, <span class="number">99L</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>第二个参数指定了所有元素的初始值，因此这 20 个元素的值都是 99L。第一个元素指定了 vector 中的元素个数，它不需要是一个常量表达式。它可以是一个表达式执行后的结果，也可以是从键盘输入的数。</p>
+<p>可以用元素类印相同的容器来初始化 <code>vector&lt;T&gt;</code> 容器。用一对迭代器来指定初始值的范围。下面是一个示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="built_in">std</span> :: <span class="built_in">string</span>, 5&gt; words &#123;<span class="string">"one"</span>, <span class="string">"two"</span>,<span class="string">"three"</span>, <span class="string">"four"</span>, <span class="string">"five"</span>&#125;;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; words_copy &#123;<span class="built_in">std</span>::begin(words) , <span class="built_in">std</span>::end(words)&#125;;</span><br></pre></td></tr></table></figure>
+<p>words_copy 被 words 数组容器中的元素初始化。如果使用移动迭代器指定 words_copy 的初始化范围，words 中的元素将会从 words 移到 words_copy。这里有一个示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>〉 words_copy &#123;<span class="built_in">std</span>::make_move_iterator(<span class="built_in">std</span>::begin(words)),<span class="built_in">std</span>::make_move_iterator(<span class="built_in">std</span>:: end(words))&#125;;</span><br></pre></td></tr></table></figure>
+<p>words_copy 会像前面那样被初始化。但元素是移动过来的而不是复制过来的，所以 words 数组中的字符串对象现在都是空字符串。</p>
+<p><strong>创建n个全为0的容器</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;T&gt;values(n);</span><br></pre></td></tr></table></figure>
+<p><strong>创建m*n个全为0的容器</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;T&gt;&gt;values(m,<span class="built_in">vector</span>&lt;T&gt;(n));</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -437,7 +426,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/" title="操作系统——三级调度（作业、内存、进程)" target="_blank" rel="external">https://josiasanas.github.io/2020/04/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88%E4%BD%9C%E4%B8%9A%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%BF%9B%E7%A8%8B)/</a>
+      <a href="https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/" title="C++语法——创建vector_T_容器" target="_blank" rel="external">https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -483,13 +472,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2020/04/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95/" title="操作系统——进程调度的几种算法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/04/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" title="操作系统——进程与线程"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2020/05/07/%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E2%80%94%E2%80%94CMake%E6%9E%84%E5%BB%BA%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" title="编译环境——CMake构建集成环境"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
