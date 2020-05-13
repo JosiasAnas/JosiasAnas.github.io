@@ -17,21 +17,16 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>C++语法——创建vector_T_容器 | Hexo</title>
-  <meta name="description" content="vector&lt;T&gt; 容器是包含 T 类型元素的序列容器，和 array&lt;T，N&gt; 容器相似，不同的是 vector&lt;T&gt; 容器的大小可以自动增长，从而可以包含任意数量的元素；因此类型参数 T 不再需要模板参数 N。只要元素个数超出 vector 当前容量，就会自动分配更多的空间。只能在容器尾部高效地删除或添加元素。 vector&lt;T&gt; 容器可以方便、">
-<meta property="og:type" content="article">
-<meta property="og:title" content="C++语法——创建vector_T_容器">
-<meta property="og:url" content="https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/index.html">
+  <title>归档: 2020/5 | Hexo</title>
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://josiasanas.github.io/archives/2020/05/page/2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="vector&lt;T&gt; 容器是包含 T 类型元素的序列容器，和 array&lt;T，N&gt; 容器相似，不同的是 vector&lt;T&gt; 容器的大小可以自动增长，从而可以包含任意数量的元素；因此类型参数 T 不再需要模板参数 N。只要元素个数超出 vector 当前容量，就会自动分配更多的空间。只能在容器尾部高效地删除或添加元素。 vector&lt;T&gt; 容器可以方便、">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-05-07T15:38:10.066Z">
-<meta property="article:modified_time" content="2020-05-07T15:39:28.311Z">
 <meta property="article:author" content="JosiasAnas">
-<meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/index.html">
+  <link rel="canonical" href="https://josiasanas.github.io/archives/2020/05/page/2/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -345,157 +340,74 @@
   
   
 <main class="main" role="main">
-  <div class="content">
-  <article id="post-C++语法——创建vector_T_容器" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-    
-    <div class="article-header">
-      
-        
+  	<article class="content article article-archives article-type-list" itemscope="">
+	    <header class="article-header">
+	      <h1 itemprop="title">归档: 2020/5</h1>
+	      <p class="text-muted">共 1 篇文章</p>
+	    </header>
+	    <div class="article-body">
+	      
   
-    <h1 class="article-title" itemprop="name">
-      C++语法——创建vector_T_容器
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/" class="article-date">
-	  <time datetime="2020-05-07T15:38:10.066Z" itemprop="datePublished">2020-05-07</time>
-	</a>
-</span>
-        
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/C-%E8%AF%AD%E6%B3%95/">C++语法</a>
-  </span>
-
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/STL/" rel="tag">STL</a>
-  </span>
-
-
-        
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/#comments" class="article-comment-link">评论</a></span>
-        
-      </div>
-    </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <p><code>vector&lt;T&gt;</code> 容器是包含 T 类型元素的序列容器，和 <code>array&lt;T，N&gt;</code> 容器相似，不同的是 <code>vector&lt;T&gt;</code> 容器的大小可以自动增长，从而可以包含任意数量的元素；因此类型参数 T 不再需要模板参数 N。只要元素个数超出 vector 当前容量，就会自动分配更多的空间。只能在容器尾部高效地删除或添加元素。</p>
-<p><code>vector&lt;T&gt;</code> 容器可以方便、灵活地代替数组。在大多数时候，都可以用 <code>vector&lt;T&gt;</code> 代替数组存放元素。只要能够意识到，<code>vector&lt;T&gt;</code> 在扩展容量，以 及在序列内部删除或添加元素时会产生一些开销；但大多数情况下，代码不会明显变慢。 为了使用 <code>vector&lt;T&gt;</code> 容器模板，需要在代码中包含头文件 vector。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**创建<span class="built_in">vector</span>&lt;T&gt;容器**</span><br></pre></td></tr></table></figure>
-<p>下面是一个生成存放 double 型元素的 <code>vector&lt;T&gt;</code> 容器示例：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; values;</span><br></pre></td></tr></table></figure>
-<p>因为容器中没有元素，所以没有分配空间，当添加第一个数据项时，会自动分配内存。可以像下面这样通过调用 reserve() 来增加容器的容量：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">values.reserve(<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
-<p>这样就设置了容器的内存分配，至少可以容纳 20 个元素。如果当前的容量已经大于或等于 20 个元素，那么这条语句什么也不做。注意，调用 reserve() 并不会生成任何元素。values 容器这时仍然没有任何元素，直到添加了 20 个元素后，才会分配更多的内存。调用 reserve() 并不会影响现有的元素。</p>
-<p>当然，如果通过调用 reserve() 来增加内存，任何现有的迭代器，例如开始迭代器和结束迭代器，都会失效，所以需要重新生成它们。这是因为，为了增加容器的容量，<code>vector&lt;T&gt;</code> 容器的元素可能已经被复制或移到了新的内存地址。</p>
-<p>创建 vector 容器的另一种方式是使用初始化列表来指定初始值以及元素个数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">int</span>&gt; primes &#123;<span class="number">2u</span>, <span class="number">3u</span>, <span class="number">5u</span>, <span class="number">7u</span>, <span class="number">11u</span>, <span class="number">13u</span>, <span class="number">17u</span>, <span class="number">19u</span>&#125;;</span><br></pre></td></tr></table></figure>
-<p>以初始化列表中的値作为元素初始值，生成有 8 个素数的 vector 容器。</p>
-<p>分配内存是比较花费时间的，所以最好只在必要时分配。vector 使用算法来增加容量，这个算法依赖一个经常使用的常对数来实现,这在早些时候会导致分配一些非常小的内存，但是随着 vector 容量的增大，内存增长数也会变大。可以如下所示，使用初始元素个数来生成 vector 容器：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; <span class="title">values</span><span class="params">(<span class="number">20</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>这个容器开始时有 20 个元素，它们的默认初始值都为 0。生成容器时，同时指定元素个数，就能够减少空间额外分配的次数，这是一个很好的习惯。</p>
-<p>注意，圆括号中的 20 表示元素的个数，是上述语句的核心。这里不能使用 {}。如果如下所示定义 vector 容器，会产生不同的结果：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; values &#123;<span class="number">20</span>&#125;;</span><br></pre></td></tr></table></figure>
-<p>vector 并没有 20 个元素。它只有一个元素，并以 20 作为初始值。添加元素会导致分配额外的内存。</p>
-<p>如果不想用 0 作为默认值，可以指定一个其他值：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">long</span>&gt; <span class="title">numbers</span><span class="params">(<span class="number">20</span>, <span class="number">99L</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>第二个参数指定了所有元素的初始值，因此这 20 个元素的值都是 99L。第一个元素指定了 vector 中的元素个数，它不需要是一个常量表达式。它可以是一个表达式执行后的结果，也可以是从键盘输入的数。</p>
-<p>可以用元素类印相同的容器来初始化 <code>vector&lt;T&gt;</code> 容器。用一对迭代器来指定初始值的范围。下面是一个示例：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="built_in">std</span> :: <span class="built_in">string</span>, 5&gt; words &#123;<span class="string">"one"</span>, <span class="string">"two"</span>,<span class="string">"three"</span>, <span class="string">"four"</span>, <span class="string">"five"</span>&#125;;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; words_copy &#123;<span class="built_in">std</span>::begin(words) , <span class="built_in">std</span>::end(words)&#125;;</span><br></pre></td></tr></table></figure>
-<p>words_copy 被 words 数组容器中的元素初始化。如果使用移动迭代器指定 words_copy 的初始化范围，words 中的元素将会从 words 移到 words_copy。这里有一个示例：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>〉 words_copy &#123;<span class="built_in">std</span>::make_move_iterator(<span class="built_in">std</span>::begin(words)),<span class="built_in">std</span>::make_move_iterator(<span class="built_in">std</span>:: end(words))&#125;;</span><br></pre></td></tr></table></figure>
-<p>words_copy 会像前面那样被初始化。但元素是移动过来的而不是复制过来的，所以 words 数组中的字符串对象现在都是空字符串。</p>
-<p><strong>创建n个全为0的容器</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;T&gt;values(n);</span><br></pre></td></tr></table></figure>
-<p><strong>创建m*n个全为0的容器</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;T&gt;&gt;values(m,<span class="built_in">vector</span>&lt;T&gt;(n));</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
-    
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/" title="C++语法——创建vector_T_容器" target="_blank" rel="external">https://josiasanas.github.io/2020/05/07/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BAvector_T_%E5%AE%B9%E5%99%A8/</a>
-    </li>
-    
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-</blockquote>
-
-
-<div class="panel panel-default panel-badger">
-  <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/as.jpg" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">JosiasAnas</span><small class="ml-1x">改变一点，幸运一点</small></a></h3>
-        <div></div>
-      </div>
-    </figure>
-  </div>
-</div>
-
-
-    </div>
-  </article>
   
     
-  <section id="comments">
+    
+      
+      
+      <section class="panel panel-default b-no">
+        <div class="panel-heading" role="tab">
+          <h3 class="panel-title">
+            <a data-toggle="collapse" href="#collapse2020" aria-expanded="true">
+              <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
+              2020
+            </a>
+            <!-- <a href="/archives/2020" class="archive-year">2020</a> -->
+          </h3>
+        </div>
+        <div id="collapse2020" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2020">
+        <div class="panel-body">
+          <div class="collection">
+    
+    
+<a href="/2020/05/02/%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E5%87%A0%E4%B8%AA%E7%BB%8F%E5%85%B8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="collection-item" target="_blank" itemprop="url">
+  <time datetime="2020-05-02T03:21:03.107Z" itemprop="datePublished">2020-05-02</time>
+  <span>&nbsp;&nbsp;&nbsp;</span> 算法——几个经典排序算法
+</a>
+
+
+  
+  
+    </div></div></div></section>
+  
+
+	    </div>
+  	</article>
   	
-      <div id="vcomments"></div>
     
-  </section>
-
-
-  
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
+    <nav class="bar bar-footer clearfix" data-stick-bottom>
+        <div class="bar-inner">
+        <ul class="pager pull-left">
+            
+            <li class="prev">
+                <a href="/archives/2020/05/">
+                    <i class="icon icon-angle-left"></i>
+                    上一页
+                </a>
+            </li>
+            
+            
+            <li class="next disabled">
+                <a href="javascript:;">
+                    下一页
+                    <i class="icon icon-angle-right"></i>                    
+                </a>
+            </li>
+            
+        </ul>
+        <div class="total-article bar-right">Page 2 of 2</div>
+        </div>
+    </nav>
     
-    <li class="prev">
-      <a href="/2020/05/09/C++%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94lock_guard%20%E4%BA%92%E6%96%A5%E9%94%81/" title="C++语法——lock_guard 互斥锁"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/2020/05/07/%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E2%80%94%E2%80%94CMake%E6%9E%84%E5%BB%BA%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" title="编译环境——CMake构建集成环境"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-  </ul>
-  
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
-  
-
-
+ 	
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -556,37 +468,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-
-   
-
-
-
-
-   
-    
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine"></script>
-  <script type="text/javascript">
-  var GUEST = ['nick', 'mail', 'link'];
-  var meta = 'nick,mail,link';
-  meta = meta.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#vcomments',
-    verify: false,
-    notify: false,
-    appId: '',
-    appKey: '',
-    placeholder: 'Just go go',
-    avatar: 'mm',
-    meta: meta,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-  </script>
-
-     
 
 
 
